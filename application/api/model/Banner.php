@@ -4,14 +4,13 @@
 namespace app\api\model;
 
 
-use think\Exception;
-use think\Model;
-
-class Banner extends Model
+class Banner extends BaseModel
 {
-    public static function getBannerById($id)
+    // 隐藏无用字段
+    protected $hidden = ['update_time','delete_time'];
+
+    public function bannerItems()
     {
-        $banner = Banner::get($id);
-        return $banner->toJson();
+        return $this->hasMany('BannerItem','banner_id','id');
     }
 }

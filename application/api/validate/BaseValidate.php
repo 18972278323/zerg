@@ -9,6 +9,7 @@ use think\Validate;
 
 class BaseValidate extends Validate
 {
+    // 执行验证的通用方法
     public function goCheck()
     {
         $request = Request::instance();
@@ -23,6 +24,16 @@ class BaseValidate extends Validate
             ]);
         }else{
             return true;
+        }
+    }
+
+    // 验证正整数
+    public function isPositiveInt($value,$rule='',$data=[],$field='')
+    {
+        if(is_numeric($value) && is_int($value + 0) && ($value + 0) >0 ){
+            return true;
+        }else{
+            return false;
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\api\controller\v1;
+namespace app\api\controller\v2;
 
 
 use app\api\validate\IDMustBePositiveInt;
@@ -23,12 +23,8 @@ class Banner
 
         (new IDMustBePositiveInt())->goCheck();
 
-        $banner = BannerModel::with(['bannerItems','bannerItems.image'])->find($id);
+        $banner = BannerModel::getBannerById($id);
 
-        if ($banner) {
-            return $banner;
-        }else{
-            throw new BannerMissingException();
-        }
+        return "这是v2版本" .$id;
     }
 }
