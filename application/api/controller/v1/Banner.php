@@ -25,10 +25,10 @@ class Banner
 
         $banner = BannerModel::with(['bannerItems','bannerItems.image'])->find($id);
 
-        if ($banner) {
-            return $banner;
-        }else{
+        if ($banner->isEmpty()) {
             throw new BannerMissingException();
+        }else{
+            return $banner;
         }
     }
 }

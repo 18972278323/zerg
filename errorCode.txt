@@ -8,3 +8,4 @@
 20000   Product找不到
 30000   Theme 找不到
 40000   Banner找不到
+50000   Category找不到

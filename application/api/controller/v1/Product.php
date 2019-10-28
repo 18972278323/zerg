@@ -25,10 +25,26 @@ class Product
 
         $proList =  ProductModel::limit($count)->order('create_time','DESC')->select();
 
-        if($proList){
-            return $proList;
-        }else{
+        if($proList->isEmpty()){
             throw new ProductMissingException();
+        }else{
+            return $proList;
         }
     }
+
+
+    public function getAllInCategory($id)
+    {
+        (new LimitCount())->goCheck();
+
+        $proList = ProductModel::where('category_id', '=', $id)->select();
+
+        if($proList->isEmpty()){
+            throw new ProductMissingException();
+        }else{
+            return $proList;
+        }
+    }
+
+
 }

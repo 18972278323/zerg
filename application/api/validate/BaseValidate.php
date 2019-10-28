@@ -36,4 +36,14 @@ class BaseValidate extends Validate
             return false;
         }
     }
+
+    // 字符串不为空
+    public function isNotEmpty($value)
+    {
+        if( empty($value) ){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

@@ -27,10 +27,10 @@ class Theme
 
         $themes = ThemeModel::with(['product','topicImg','headImg'])->select($ids);
 
-        if ($themes) {
-            return $themes;
-        }else{
+        if ($themes->isEmpty()) {
             throw new ThemeMissingException();
+        }else{
+            return $themes;
         }
     }
 

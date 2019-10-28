@@ -12,6 +12,6 @@ namespace app\lib\exception;
 class ThemeMissingException extends BaseException
 {
     public $httpCode = 400;
-    public $msg = "请求的主题不存在了，请检查参数";
-    public $errorCode = 50000;
+    public $msg = "请求的主题不存在，请检查参数";
+    public $errorCode = 30000;
 }
