@@ -19,14 +19,14 @@ class UserTokenService extends BaseService
     protected $wxLoginUrl;
 
     // 从Token中获取指定字段的值
-    public function getValueFromToken($name,$token)
+    public static function  getValueFromToken($name,$token)
     {
         $userInfo = Cache::get($token);
         if(!$userInfo){
             throw new TokenException();
         }else{
             if(!is_array($userInfo)){
-                $userInfo = json_decode($userInfo);
+                $userInfo = json_decode($userInfo,true);
             }
 
             if(array_key_exists($name,$userInfo)){
