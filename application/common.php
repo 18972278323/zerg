@@ -34,3 +34,19 @@ function curl_get($url, &$httpCode = 0)
     return $file_contents;
 
 }
+
+/**
+ * 获取指定长度的随机字符串
+ * @param $length   长度
+ * @return string   随机字符串
+ */
+function getRandStr($length)
+{
+    $str = "ABCDEFGHIJKLMNOPQRSTUVWXYZzbcdefghijklmnopqrstuvwxyz1234567890";
+    $randStr = '';
+    for ($i = 0; $i< $length; $i++){
+        $randIndex = rand(0,strlen($str)-1);
+        $randStr .= $str[$randIndex];
+    }
+    return $randStr;
+}

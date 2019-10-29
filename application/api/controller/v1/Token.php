@@ -14,6 +14,7 @@ class Token
      * @url token/user?code=111111
      * @param string $code
      * @throws
+     * @return array token令牌
      */
     public function getToken($code ='')
     {
@@ -21,5 +22,6 @@ class Token
 
         $tokenService = new UserTokenService($code);
         $token =  $tokenService->get();
+        return ['token'=>$token];
     }
 }

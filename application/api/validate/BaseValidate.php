@@ -46,4 +46,19 @@ class BaseValidate extends Validate
             return true;
         }
     }
+
+    // 通过获得验证规则中验证过的参数
+    public function getDataByRule()
+    {
+        $data = (Request::instance())->post();
+        if(array_key_exists('user_id',$data)){
+            throw new ParameterException(['msg'=>'数据中含有非法参数']);
+        }else{
+            $dataNew = [];
+            foreach ($this->rule as $key => $value){
+                $dataNew[$key] = $data[$key];
+            }
+            return $dataNew;
+        }
+    }
 }

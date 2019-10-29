@@ -8,4 +8,6 @@
 return [
     // 图片路径
     'image_prefix'  => 'http://zerg.io/images',
+    // token令牌有效时间 s
+    'token_expire_in'   => 3600,
 ];
