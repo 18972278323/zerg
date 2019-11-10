@@ -11,7 +11,7 @@ namespace app\lib\exception;
 
 class AddressException extends BaseException
 {
-//    public $httpCode = 400;
-//    public $msg = "地址保存失败";
-//    public $errorCode = ;
+    public $httpCode = 400;
+    public $msg = "地址保存失败";
+    public $errorCode = 71000;
 }

@@ -13,6 +13,9 @@ use think\Config;
 
 class BaseService
 {
+    /**
+     * @return string Token令牌
+     */
     protected static function genToken()
     {
         $randStr = getRandStr(32);

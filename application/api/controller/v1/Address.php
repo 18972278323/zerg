@@ -17,17 +17,19 @@ use app\lib\exception\SuccessMessage;
 use app\lib\exception\UserException;
 use think\Request;
 
-class Address
+class Address extends BaseController
 {
+    // 保存收件人地址
     public function saveAddress()
     {
+        $this->checkLeastUserScope();
+
         $validate = new AddressNew();
         $request = Request::instance();
         $validate->goCheck();
 
         $data = $validate->getDataByRule();
-        $token = $request->header('token');
-        $uid = UserTokenService::getValueFromToken('uid',$token);
+        $uid = UserTokenService::getValueFromToken('uid');
         $addrId = $request->post('id');
 
         $userExist = User::get($uid);

@@ -21,7 +21,7 @@ class Token
         (new TokenValidate())->goCheck();
 
         $tokenService = new UserTokenService($code);
-        $token =  $tokenService->get();
+        $token =  $tokenService->getToken();
         return ['token'=>$token];
     }
 }

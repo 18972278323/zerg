@@ -13,9 +13,11 @@ use app\api\validate\IDMustBePositiveInt;
 use app\api\validate\LimitCount;
 use app\api\model\Product as ProductModel;
 use app\lib\exception\ProductMissingException;
+use think\Controller;
 
-class Product
+class Product extends Controller
 {
+
     /**
      * 获取最近商品列表
      * @url product/recent?count=10
@@ -65,7 +67,6 @@ class Product
     {
         (new IDMustBePositiveInt())->goCheck();
 
-//        $proDetail = ProductModel::with(['properties','images.imgUrl'])
         $proDetail = ProductModel::with(['properties'])
             ->with([ 'images'=>function($query){
                         $query->with('imgUrl')->order('order','ASC');

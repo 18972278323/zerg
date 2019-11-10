@@ -25,3 +25,5 @@ Route::get('api/:version/category/:id', 'api/:version.Product/getAllInCategory')
 Route::post('api/:version/token/user', 'api/:version.Token/getToken');
 
 Route::post('api/:version/address/save', 'api/:version.Address/saveAddress');
+
+Route::post('api/:version/order/add', 'api/:version.Order/createOrder');

@@ -3,6 +3,9 @@
 
 namespace app\api\validate;
 
+use app\api\model\UserAddress;
+use app\api\service\UserTokenService;
+use app\lib\exception\AddressException;
 use app\lib\exception\ParameterException;
 use think\Request;
 use think\Validate;
@@ -21,6 +24,21 @@ class BaseValidate extends Validate
                 'httpCode'  => 400,
                 'msg'   => $this->getError(),
                 'errorCode' => 10002
+            ]);
+        }else{
+            return true;
+        }
+    }
+
+    // 验证地址ID是否存在
+    public function checkAddressId($value)
+    {
+        $uid = UserTokenService::getValueFromToken('uid');
+        $res = UserAddress::where('user_id','=',$uid)->find($value);
+        if(!$res){
+            throw new AddressException([
+                'msg' => "地址信息查询失败",
+                'errorCode' => 71001,
             ]);
         }else{
             return true;

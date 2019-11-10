@@ -5,11 +5,13 @@ namespace app\api\service;
 
 
 use app\api\model\User;
-use app\lib\exception\WeChatException;
+use app\lib\enum\ScopeEnum;
 use app\lib\exception\TokenException;
+use app\lib\exception\WeChatException;
 use think\Cache;
 use think\Config;
 use think\Exception;
+use think\Request;
 
 class UserTokenService extends BaseService
 {
@@ -18,9 +20,23 @@ class UserTokenService extends BaseService
     protected $wxAppSecret;
     protected $wxLoginUrl;
 
-    // 从Token中获取指定字段的值
-    public static function  getValueFromToken($name,$token)
+    // 拼接请求 openid的 url地址
+    public function __construct($code='')
     {
+        $this->code = $code;
+        $this->wxAppID = Config::get('wx.wx_app_id');
+        $this->wxAppSecret = Config::get('wx.wx_app_secret');
+        $this->wxLoginUrl = sprintf(Config::get('wx.wx_opid_url'),
+            $this->wxAppID, $this->wxAppSecret,$this->code);
+    }
+
+    // 从Token中获取指定字段的值
+    public static function  getValueFromToken($name)
+    {
+        $token = Request::instance()->header('token');
+        if(!$token){
+            throw new TokenException();
+        }
         $userInfo = Cache::get($token);
         if(!$userInfo){
             throw new TokenException();
@@ -37,18 +53,9 @@ class UserTokenService extends BaseService
         }
     }
 
-    // 拼接请求 openid的 url地址
-    public function __construct($code='')
-    {
-        $this->code = $code;
-        $this->wxAppID = Config::get('wx.wx_app_id');
-        $this->wxAppSecret = Config::get('wx.wx_app_secret');
-        $this->wxLoginUrl = sprintf(Config::get('wx.wx_opid_url'),
-                        $this->wxAppID, $this->wxAppSecret,$this->code);
-    }
 
     // 生成Token
-    public function get()
+    public function getToken()
     {
         $res = curl_get($this->wxLoginUrl);
         $wxRes = json_decode($res,true);
@@ -92,14 +99,15 @@ class UserTokenService extends BaseService
 //        $openId = $wxRes['openid'];
         $openId = 1;
         $wxRes['uid'] = $this->getIDByOpenID($openId);
-        $wxRes['scope'] = 16;
+        $wxRes['scope'] = ScopeEnum::USER;
+//        $wxRes['scope'] = 15;
 
         return json_encode($wxRes);
     }
 
     /**
      * @param $openId 微信返回的OpenID
-     * @return int $id 用户ID
+     * @return int $id 用户在数据库中的ID
      * @throws
      */
     private function getIDByOpenID($openId)

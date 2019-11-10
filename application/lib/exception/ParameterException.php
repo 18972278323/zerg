@@ -9,7 +9,7 @@ class ParameterException extends BaseException
 {
     public $httpCode = 400;
     public $msg = "参数错误";
-    public $errorCode = 10000;
+    public $errorCode = 10002;
 
     public function __construct($params = [])
     {
